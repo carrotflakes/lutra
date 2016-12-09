@@ -12,6 +12,7 @@
            #:vocab-size
            #:match-utterances
            #:utterance-dialogues
+           #:all-dialogues
            #:add-dialogue
            #:remove-dialogue))
 (in-package :lutra)
@@ -132,6 +133,12 @@
 
 (defmethod utterance-dialogues ((lutra lutra) utterance)
   (gethash utterance (utterance-dialogues-table lutra)))
+
+(defmethod all-dialogues ((lutra lutra))
+  (loop
+     for key being each hash-key of (utterance-dialogues-table lutra)
+     using (hash-value value)
+     append value))
 
 (defmethod add-dialogue ((lutra lutra) dialogue)
   (assert (and (consp dialogue)
